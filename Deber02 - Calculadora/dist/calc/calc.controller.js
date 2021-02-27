@@ -15,32 +15,106 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.calcController = void 0;
 const common_1 = require("@nestjs/common");
 let calcController = class calcController {
-    suma(request) {
-        return Number(request.query.num1) + Number(request.query.num2);
+    cookie(request, response) {
+        console.log("PETICION: ", request.cookies);
+        response.cookie("nombre", request.query.nombre);
+        return "Usuario iniciado: " + request.query.nombre;
+    }
+    suma(request, response) {
+        const des = setPuntaje(request, response);
+        if (des === true) {
+            return "Initial Score Set";
+        }
+        else {
+            const punt = Number(request.cookies.puntaje);
+            const op = Number(request.query.num1) + Number(request.query.num2);
+            const score = punt - op;
+            response.cookie("puntaje", score);
+            if (score <= 0) {
+                return "Ganaste";
+            }
+            else {
+                return "Current Score: " + score;
+            }
+        }
     }
     resta(request, response) {
-        response.set("resultado", Number(request.body.num1) - Number(request.body.num2)).send();
+        const des = setPuntaje(request, response);
+        if (des === true) {
+            return "Initial Score Set";
+        }
+        else {
+            const punt = Number(request.cookies.puntaje);
+            const op = Number(request.body.num1) - Number(request.body.num2);
+            const score = punt - op;
+            response.cookie("puntaje", score);
+            if (score <= 0) {
+                return "Ganaste";
+            }
+            else {
+                return "Current Score: " + score;
+            }
+        }
     }
-    mult(request) {
-        return Number(request.params.num1) * Number(request.params.num2);
+    mult(request, response) {
+        const des = setPuntaje(request, response);
+        if (des === true) {
+            return "Initial Score Set";
+        }
+        else {
+            const punt = Number(request.cookies.puntaje);
+            const op = Number(request.params.num1) * Number(request.params.num2);
+            const score = punt - op;
+            response.cookie("puntaje", score);
+            if (score <= 0) {
+                return "Ganaste";
+            }
+            else {
+                return "Current Score: " + score;
+            }
+        }
     }
-    division(request) {
-        return Number(request.headers.num1) / Number(request.headers.num2);
+    division(request, response) {
+        const des = setPuntaje(request, response);
+        if (des === true) {
+            return "Initial Score Set";
+        }
+        else {
+            const punt = Number(request.cookies.puntaje);
+            const op = Number(request.headers.num1) / Number(request.headers.num2);
+            const score = punt - op;
+            response.cookie("puntaje", score);
+            if (score <= 0) {
+                return "Ganaste";
+            }
+            else {
+                return "Current Score: " + score;
+            }
+        }
     }
 };
+__decorate([
+    common_1.Get("setName"),
+    __param(0, common_1.Req()),
+    __param(1, common_1.Res({ passthrough: true })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], calcController.prototype, "cookie", null);
 __decorate([
     common_1.Get("suma"),
     common_1.HttpCode(200),
     __param(0, common_1.Req()),
+    __param(1, common_1.Res({ passthrough: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], calcController.prototype, "suma", null);
 __decorate([
     common_1.Post("resta"),
     common_1.HttpCode(201),
     __param(0, common_1.Req()),
-    __param(1, common_1.Res()),
+    __param(1, common_1.Res({ passthrough: true })),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
@@ -49,20 +123,39 @@ __decorate([
     common_1.Put("mult/:num1/:num2"),
     common_1.HttpCode(200),
     __param(0, common_1.Req()),
+    __param(1, common_1.Res({ passthrough: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], calcController.prototype, "mult", null);
 __decorate([
     common_1.Delete("division"),
     common_1.HttpCode(201),
     __param(0, common_1.Req()),
+    __param(1, common_1.Res({ passthrough: true })),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], calcController.prototype, "division", null);
 calcController = __decorate([
     common_1.Controller("calc")
 ], calcController);
 exports.calcController = calcController;
+const setPuntaje = (request, response) => {
+    console.log("CURRENT SCORE: " + request.cookies.puntaje);
+    var des = false;
+    if (!request.cookies.hasOwnProperty("puntaje")) {
+        console.log("SETTING SCORE");
+        response.cookie("puntaje", 100);
+        des = true;
+    }
+    else {
+        console.log("SETTING SCORE");
+        if (Number(request.cookies.puntaje) <= 0) {
+            response.cookie("puntaje", 100);
+            des = true;
+        }
+    }
+    return des;
+};
 //# sourceMappingURL=calc.controller.js.map

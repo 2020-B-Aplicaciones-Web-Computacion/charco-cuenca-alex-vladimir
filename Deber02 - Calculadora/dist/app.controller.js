@@ -57,46 +57,4 @@ class Cliente {
     }
 }
 Cliente.sexoCliente = true;
-class User {
-    constructor(nombre, apellido) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-    }
-}
-const user1 = new User("Cosme", "Fulanito");
-let objUser = {
-    nombre: "Cosme 2",
-    apellido: "Fulanito 2"
-};
-var userin1 = {
-    nombre: "Cosme In",
-    apellido: "Fulanito In"
-};
-let a = 22;
-let b = a;
-b = 60;
-let edad1 = {
-    edad: 22
-};
-let edad2 = edad1;
-edad2.edad = 60;
-let edadClon = Object.assign({}, edad1);
-edadClon.edad = 100;
-const array1 = [1, ",true", null, new Date()];
-const array2 = [1, 2, 3, 4, 5];
-const array3 = [...array2, 100];
-console.log("array: ", array2);
-const index = array2.findIndex((item) => {
-    return item === 3;
-});
-array2[index] = 101;
-console.log("array: ", array2);
-array2.push(999999);
-console.log("array: ", array2);
-array2.unshift(-1);
-console.log("array: ", array2);
-0 ? console.log("Truty") : console.log("False");
-1 ? console.log("Truty") : console.log("False");
--1 ? console.log("Truty") : console.log("False");
-[] ? console.log("Truty") : console.log("False");
 //# sourceMappingURL=app.controller.js.map

@@ -1,6 +1,7 @@
 export declare class calcController {
-    suma(request: any): number;
-    resta(request: any, response: any): void;
-    mult(request: any): number;
-    division(request: any): number;
+    cookie(request: any, response: any): string;
+    suma(request: any, response: any): string;
+    resta(request: any, response: any): string;
+    mult(request: any, response: any): string;
+    division(request: any, response: any): string;
 }

@@ -60,7 +60,7 @@ abstract class Cliente {
   }
 
 }
-
+/*
 
 class User{
     constructor(
@@ -110,22 +110,22 @@ edad2.edad=60
 //Clonacion de objetos
 let edadClon={...edad1}
 edadClon.edad=100
-/*
+
 console.log("Edad 1: ",edad1)
 console.log("Edad 2: ",edad2)
 console.log("Edad 3: ",edadClon)
 
- */
+
 
 //Arreglos
 const array1=[1,",true",null,new Date()]
 const array2:number[]=[1,2,3,4,5]
 const array3:number[]=[...array2,100]
-/*
+
 console.log("Array 1: ",array1)
 console.log("Array 2: ",array2)
 console.log("Array 3: ",array3)
-*/
+
 
 console.log("array: ",array2)
 const index=array2.findIndex(
@@ -153,4 +153,4 @@ console.log("array: ",array2)
 -1 ?  console.log("Truty"):console.log("False");
 [] ?  console.log("Truty"):console.log("False");
 
-
+*/

@@ -27,6 +27,11 @@ let userController = class userController {
         const r = Object.assign(Object.assign({}, request.body), { qparams: request.query, header: request.headers });
         response.send(r);
     }
+    set(param, request, response) {
+        console.log(param.name);
+        response.cookie("userName", param.name);
+        return "Cookie seteada, userName:" + param.name;
+    }
 };
 __decorate([
     common_1.Get("hola"),
@@ -54,6 +59,15 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], userController.prototype, "data", null);
+__decorate([
+    common_1.Get("setName/:name"),
+    __param(0, common_1.Param()),
+    __param(1, common_1.Req()),
+    __param(2, common_1.Res({ passthrough: true })),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:returntype", void 0)
+], userController.prototype, "set", null);
 userController = __decorate([
     common_1.Controller("users")
 ], userController);
