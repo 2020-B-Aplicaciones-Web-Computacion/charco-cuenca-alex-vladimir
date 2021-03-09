@@ -1,0 +1,65 @@
+    <%
+    const array=[1,2,3];
+    const v1=5;
+    const v2=3;
+
+%>
+<h1><%=v1%>-<%=v2%></h1>
+<ul>
+    <%for (let num in array){%>
+    <li><%=num%></li>
+    <%}%>
+</ul>
+    <style>
+        .mensaje{
+            border: solid 1px #bd4343;
+            width: 100%;
+            margin: 10px;
+
+        }
+    </style>
+<!--
+<%// if(params.men){%>
+        <div class="mensaje">
+            <%=// params%>
+        </div>
+
+        <%//}%>
+-->
+
+    <a href="/pets/create">
+        <button>
+            Create Pet
+        </button>
+    </a>
+
+    <form action="/pets/list" method="get">
+        <label for="search">Search</label>
+        <input id="search" type="text" name="search"/>
+
+        <button type="submit">
+            Search
+        </button>
+    </form>
+
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Breed</th>
+            <th>Actions</th>
+        </tr>
+            <% for(let pet of datos[0]){%>
+            <tr>
+                <td><%=pet.id%></td>
+                <td><%=pet.nombre%></td>
+                <td><%=pet.breed%></td>
+                <td>
+                    <button>Edit</button>
+                    <button>Delete</button>
+                </td>
+
+            </tr>
+        <%}%>
+    </table>

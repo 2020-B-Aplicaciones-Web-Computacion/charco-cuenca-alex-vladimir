@@ -5,6 +5,7 @@ import {Controller, Get, Header, HttpCode, Param, Post, Req, Res} from "@nestjs/
 //@Controller("/")
 export class userController{
     //Rutas con metodo HTTP
+
     @Get ("hola")
     @HttpCode(200)
     @Header("cheems","server")
@@ -19,6 +20,7 @@ export class userController{
         //Funcion de retorno para ruta
         return "Que mas ve http"
     }
+
 
     @Get ("adios")
     adios(){
@@ -56,5 +58,8 @@ export class userController{
         response.cookie("userName",param.name)
         return "Cookie seteada, userName:"+param.name
     }
+
+    //ACCIONES CON BASE DE DATOS
+
 
 }
