@@ -20,7 +20,7 @@ async function bootstrap() {
 
     await app.use(cookieParser())
     await app.use(helmet());
-    await app.listen(3000);
+    await app.listen(4000);
     console.log(chalk.blue.inverse.bold("SERVER RUNNING ON PORT: 3000"))
   }catch (e) {
     console.log(chalk.red.inverse.bold("ERROR",e))

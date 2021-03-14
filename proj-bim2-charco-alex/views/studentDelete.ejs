@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cheems University | Students</title>
+    <base href="/">
+    <link rel="shortcut icon" href="./public/images/favicon.ico" type="image/x-icon">
+    <link href="./public/images/style.css" rel="stylesheet" type="text/css">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'unsafe-inline'">
+    <link href="../public/images/styleInput.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+
+<body >
+
+<div class="navbar">
+    <div class="navbar-container container">
+        <a href='/' class='navbar-logo'>
+            Cheems University
+        </a>
+        <ul class= 'nav-menu active'>
+            <li class="nav-item">
+                <a href='/' class='nav-links'>
+                    Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href='/subject/' class='nav-links'>
+                    Subjects
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href='/student/' class='nav-links'>
+                    Students
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<!--INICIO CONTENIDO-->
+
+
+
+<div class='table__section tabIn' >
+    <h2 class='pricing__heading'>Insert Data for Student to Update</h2>
+
+
+    <form action="/student/deleting?id=<%=stud.id%>" method="post">
+
+        <div id='btnInput'>
+        <button type="submit" class='btn btn-danger' id='btnSize'>Delete</button>
+            <a href='/student/'>
+                <button type='button' class='btn btn-secondary' id='btnSize' style='background-color: #8946d5'>Back</button>
+            </a>
+        </div>
+        <table class="table">
+            <tr>
+                <td>
+                    <label for="nombre" >Student Name </label>
+                </td>
+                <td>
+                    <input id="nombre" type="text" name="nombre" required class="form-control" value='<%=stud.nom_stud%>' readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="apellido" >Student Surname </label>
+                </td>
+                <td>
+                    <input id="apellido" type="text" name="apellido" required class="form-control" value='<%=stud.ape_stud%>' readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="fnac">Born Date</label>
+                </td>
+                <td>
+
+                    <input id="fnac" type="date" name="fnac" required readonly
+
+                           class="form-control"
+                           value='<%=stud.fnac_stud%>'>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="genero">Genero</label>
+                </td>
+                <td style='text-align: left;top: 50%;transform: translate(0px -20px);display: block'>
+                    <%if(stud.gen_stud.match("male")){%>
+                        <input style='width: 20px;'type="radio" id="male" name="genero" value="male"  required checked disabled>
+                        <label style='font-size: 25px;' for="male">Male</label><br>
+                        <input type="radio" id="female"style='width: 20px;' name="genero" value="female"  readonly>
+                        <label style='font-size: 25px;' for="female">Female</label><br>
+                    <%}else {%>
+                        <input type="radio" id="male" name="genero" value="male" style='width: 20px;' required  readonly>
+                        <label style='font-size: 25px;' for="male">Male</label><br>
+                        <input type="radio" id="female" name="genero" value="female" checked disabled style='width: 20px;'>
+                        <label style='font-size: 25px;' for="female">Female</label><br>
+                    <%}%>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for='subject'>Subject</label>
+                </td>
+                <td>
+
+                    <input id="sub" type="number" id="subject" name="subject"
+                           class='form-control'
+                           value='<%=stud.subid_stud%>' readonly>
+                </td>
+            </tr>
+
+        </table>
+
+    </form>
+
+
+</div>
+
+<!--FOOTER-->
+<div class='footer-container'>
+    <section class='footer-subscription'>
+        <p class='footer-subscription-heading'>
+            Join our new and most Exciting Courses
+        </p>
+        <p class='footer-subscription-text'>
+            You can unsubscribe at any time.
+        </p>
+
+    </section>
+    <div class='footer-links'>
+        <div class='footer-link-wrapper'>
+            <div class='footer-link-items'>
+                <h2>About Us</h2>
+                <a href='/'>How it works</a>
+                <a href='/'>Testimonials</a>
+                <a href='/'>Careers</a>
+                <a href='/'>Terms of Service</a>
+
+            </div>
+            <div class='footer-link-items'>
+                <h2>Contact Us</h2>
+                <a href='/'>Contact</a>
+                <a href='/'>Support</a>
+            </div>
+        </div>
+
+    </div>
+
+    <small class='website-rights'>Cheems © 2120</small>
+</div>
+
+</body>
+</html>

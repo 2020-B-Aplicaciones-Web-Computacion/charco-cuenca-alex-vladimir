@@ -1,0 +1,32 @@
+<% for(let sub of datos[0]){%>
+<tr>
+    <td><%=sub.id%></td>
+    <td><%=sub.name%></td>
+    <td><%=sub.cupo%></td>
+    <td>
+        <button>Edit</button>
+        <button>Delete</button>
+    </td>
+
+</tr>
+<%}%>
+<% for(let sub of datos[0]){%>
+<tr>
+    <td><%=sub.id%></td>
+    <td><%=sub.sub_name%></td>
+    <td><%=sub.sub_cupo%></td>
+    <td><%=sub.sub_cod%></td>
+    <td><%=sub.sub_fstart%></td>
+    <td><%=sub.sub_fend%></td>
+    <td>
+        <a href="/subject/edit?id=<%=sub.id%>">
+            <button class='btn btn-primary'>Edit</button>
+        </a>
+
+        <a href="/subject/delete?id=<%=sub.id%>">
+            <button class='btn btn-danger'>Delete</button>
+        </a>
+    </td>
+
+</tr>
+<%}%>

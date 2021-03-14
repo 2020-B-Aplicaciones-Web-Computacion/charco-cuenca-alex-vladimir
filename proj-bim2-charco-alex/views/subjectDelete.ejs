@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cheems University | Subjects</title>
+    <base href="/">
+    <link rel="shortcut icon" href="./public/images/favicon.ico" type="image/x-icon">
+    <link href="./public/images/style.css" rel="stylesheet" type="text/css">
+    <link href="../public/images/styleInput.css" rel="stylesheet" type="text/css">
+    <link href="../public/images/styleInput.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+
+<body>
+
+
+<div class="navbar">
+    <div class="navbar-container container">
+        <a href='/' class='navbar-logo'>
+            Cheems University
+        </a>
+        <ul class= 'nav-menu active'>
+            <li class="nav-item">
+                <a href='/' class='nav-links'>
+                    Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href='/subject/' class='nav-links'>
+                    Subjects
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href='/student/' class='nav-links'>
+                    Students
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class='table__section tabIn'>
+
+    <h2 class='pricing__heading'>Confirm Subject to be Deleted</h2>
+
+    <form action="/subject/deleting?id=<%=reg.id%>" method="post" >
+        <table class="table">
+            <tr>
+                <td>
+                    <label for="nombre">Subject Name</label>
+                </td>
+                <td>
+
+                    <input id="nombre" type="text" name="nombre" value="<%=reg.sub_name%>" class="form-control" readonly>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+
+                    <label for="cupo">Quota</label>
+                </td>
+                <td>
+
+                    <input id="cupo" type="number" name="cupo"  value="<%=reg.sub_cupo%>" class="form-control" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                    <label for="codigo">Code</label>
+                </td>
+                <td>
+
+                    <input id="codigo" type="text" name="codigo" minlength="7" maxlength='7' style="text-transform:uppercase" value="<%=reg.sub_cod%>" class="form-control" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="finicio">Start Date</label>
+                </td>
+                <td>
+                    <input id="finicio" type="date" name="finicio" value="<%=reg.sub_fstart%>" readonly class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="fend">End Date</label>
+                </td>
+                <td>
+                    <input id="fend" type="date" name="fend" value="<%=reg.sub_fend%>" readonly class="form-control">
+                </td>
+            </tr>
+        </table>
+
+        <div id='btnInput'>
+        <button type="submit" class='btn btn-danger' id='btnSize'>Delete</button>
+            <a href='/subject/'>
+                <button type="button" class='btn btn-secondary' id='btnSize' style='background-color: #8946d5'>Cancel</button>
+            </a>
+        </div>
+    </form>
+</div>
+
+<!--FOOTER-->
+<div class='footer-container'>
+    <section class='footer-subscription'>
+        <p class='footer-subscription-heading'>
+            Join our new and most Exciting Courses
+        </p>
+        <p class='footer-subscription-text'>
+            You can unsubscribe at any time.
+        </p>
+
+    </section>
+    <div class='footer-links'>
+        <div class='footer-link-wrapper'>
+            <div class='footer-link-items'>
+                <h2>About Us</h2>
+                <a href='/'>How it works</a>
+                <a href='/'>Testimonials</a>
+                <a href='/'>Careers</a>
+                <a href='/'>Terms of Service</a>
+
+            </div>
+            <div class='footer-link-items'>
+                <h2>Contact Us</h2>
+                <a href='/'>Contact</a>
+                <a href='/'>Support</a>
+            </div>
+        </div>
+
+    </div>
+
+    <small class='website-rights'>Cheems © 2120</small>
+</div>
+
+</body>
+</html>
