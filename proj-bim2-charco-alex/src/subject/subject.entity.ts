@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {Min} from "class-validator";
 import { StudentEntity } from '../student/student.entity';
 
@@ -20,6 +20,7 @@ export class SubjectEntity{
     type:"varchar",
     length:7,
     nullable:false,
+    unique:true,
     name:"sub_cod"
   })
   sub_cod:string

@@ -2,6 +2,8 @@ import { Body, Controller, Delete, Get, Header, HttpCode, Param, Post, Req, Res 
 import {SubjectService} from "./subject.service"
 import { SubjectEntity } from './subject.entity';
 import { FindConditions, Like } from 'typeorm';
+import { SubjectDTO } from '../DTO/subjectDTO';
+import { validate } from 'class-validator';
 
 //Directorio URL del Controlador
 @Controller("subject")
@@ -50,7 +52,8 @@ export class SubjectController{
       });
       response.render('subjectList'
         ,{
-          datos:data
+          datos:data,
+          men:request.query.men
         });
 
 
@@ -62,7 +65,10 @@ export class SubjectController{
     @Req() request
     ,@Res() response
   ){
-    response.render("subjectCreate")
+
+    response.render("subjectCreate",{
+      men:request.query.men
+    })
   }
 
   @Post("createForm")
@@ -70,14 +76,35 @@ export class SubjectController{
     @Body() params,
     @Res() response
   ){
-    await this._subjectService.SubjectEntity.save({
-      sub_name:params.nombre,
-      sub_cupo:params.cupo,
-      sub_cod:params.codigo.toUpperCase(),
-      sub_fstart:params.finicio,
-      sub_fend:params.fend
-    });
-    response.redirect(`/subject/?men=Subject Created:`)
+    const valSubject=new SubjectDTO()
+
+      valSubject.sub_name=params.nombre;
+      valSubject.sub_cupo= parseInt(params.cupo) ;
+      valSubject.sub_cod=params.codigo.toUpperCase();
+      valSubject.sub_fstart=new Date(params.finicio);
+      valSubject.sub_fend=new Date(params.fend);
+
+    const errors=await validate(valSubject)
+
+    if(errors.length>0){
+      console.log("errores: ",errors.length, "are: ",errors.toString())
+      response.redirect(`/subject/create?men=Invalid Input`)
+    }else{
+      try{
+        await this._subjectService.SubjectEntity.save({
+          sub_name:params.nombre,
+          sub_cupo:params.cupo,
+          sub_cod:params.codigo.toUpperCase(),
+          sub_fstart:params.finicio,
+          sub_fend:params.fend
+        });
+        response.redirect(`/subject/?men=Subject Created: ${params.codigo.toUpperCase()} - ${params.nombre}`)
+      }catch (e) {
+        response.redirect(`/subject/create?men=Invalid Input`)
+      }
+
+    }
+
   }
 
   @Post("updateForm")
@@ -86,19 +113,36 @@ export class SubjectController{
     @Body() params,
     @Res() response
   ){
-    const subject={
-      sub_name:params.nombre,
-      sub_cupo:params.cupo,
-      sub_cod:params.codigo.toUpperCase(),
-      sub_fstart:params.finicio,
-      sub_fend:params.fend
-    }
-    await this._subjectService.SubjectEntity.update(
-      request.query.id,
-      subject
-    )
+    const valSubject=new SubjectDTO()
 
-    response.redirect(`/subject/?men=Subject Updated:`)
+    valSubject.sub_name=params.nombre;
+    valSubject.sub_cupo= parseInt(params.cupo) ;
+    valSubject.sub_cod=params.codigo.toUpperCase();
+    valSubject.sub_fstart=new Date(params.finicio);
+    valSubject.sub_fend=new Date(params.fend);
+
+    const errors=await validate(valSubject)
+
+    if(errors.length>0){
+      console.log("errores: ",errors.length, "are: ",errors.toString())
+      response.redirect(`/subject/create?men=Invalid Input`)
+    }else{
+      const subject={
+        sub_name:params.nombre,
+        sub_cupo:params.cupo,
+        sub_cod:params.codigo.toUpperCase(),
+        sub_fstart:params.finicio,
+        sub_fend:params.fend
+      }
+      await this._subjectService.SubjectEntity.update(
+        request.query.id,
+        subject
+      )
+
+      response.redirect(`/subject/?men=Subject Updated: ${subject.sub_cod} - ${subject.sub_name}`)
+    }
+
+
   }
 
   @Get("delete")

@@ -33,6 +33,7 @@ __decorate([
         type: "varchar",
         length: 7,
         nullable: false,
+        unique: true,
         name: "sub_cod"
     }),
     __metadata("design:type", String)

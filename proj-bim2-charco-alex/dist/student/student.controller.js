@@ -18,6 +18,7 @@ const student_service_1 = require("./student.service");
 const typeorm_1 = require("typeorm");
 const subject_service_1 = require("../subject/subject.service");
 const class_validator_1 = require("class-validator");
+const studentDTO_1 = require("../DTO/studentDTO");
 let StudentController = class StudentController {
     constructor(_StudentService, _subjectService) {
         this._StudentService = _StudentService;
@@ -50,7 +51,8 @@ let StudentController = class StudentController {
             }
         });
         response.render('studentList', {
-            datos: data
+            datos: data,
+            men: request.query.men
         });
     }
     async create(request, response) {
@@ -88,20 +90,34 @@ let StudentController = class StudentController {
         const subPar = await this._subjectService.SubjectEntity.findOne(params.subject);
         subPar.sub_cupo--;
         const errors = await class_validator_1.validate(subPar);
+        const valStudent = new studentDTO_1.StudentDTO();
+        valStudent.nom_stud = params.nombre;
+        valStudent.ape_stud = params.apellido;
+        valStudent.fnac_stud = new Date(params.fnac);
+        valStudent.gen_stud = params.genero;
+        valStudent.subid_stud = parseInt(params.subject);
+        const errors2 = await class_validator_1.validate(valStudent);
         if (errors.length > 0) {
             response.redirect(`/student/create?men=Classroom is Full`);
         }
         else {
-            await this._StudentService.StudentEntity.save({
-                nom_stud: params.nombre,
-                ape_stud: params.apellido,
-                fnac_stud: params.fnac,
-                gen_stud: params.genero,
-                subid_stud: params.subject,
-                fkSubject: params.subject
-            });
-            await this._subjectService.SubjectEntity.update(params.subject, subPar);
-            response.redirect(`/student/?men=Student_Created:`);
+            if (errors2.length <= 0) {
+                await this._StudentService.StudentEntity.save({
+                    nom_stud: params.nombre,
+                    ape_stud: params.apellido,
+                    fnac_stud: params.fnac,
+                    gen_stud: params.genero,
+                    subid_stud: params.subject,
+                    fkSubject: params.subject,
+                });
+                await this._subjectService.SubjectEntity.update(params.subject, subPar);
+                response.redirect(`/student/?men=Student_Created:`);
+            }
+            else {
+                response.redirect(`/student/create?men=Invalid Input`);
+                console.log(errors2.toString());
+                console.log("Num errors: ", errors2.length);
+            }
         }
     }
     async edit(request, response) {
@@ -141,28 +157,27 @@ let StudentController = class StudentController {
         });
     }
     async updateForm(request, params, response) {
-        const student = {
-            nom_stud: params.nombre,
-            ape_stud: params.apellido,
-            fnac_stud: params.fnac,
-            gen_stud: params.genero,
-            subid_stud: params.subject,
-            fkSubject: params.subject
-        };
-        if (request.query.old === params.subject) {
-            response.redirect(`/student/edit/?id=${request.query.id}&men=Nothing to Update`);
-        }
-        else {
-            console.log(request.query.old, params.subject);
-            console.log("--STUDENT: ", student);
+        const valStudent = new studentDTO_1.StudentDTO();
+        valStudent.nom_stud = params.nombre;
+        valStudent.ape_stud = params.apellido;
+        valStudent.fnac_stud = new Date(params.fnac);
+        valStudent.gen_stud = params.genero;
+        valStudent.subid_stud = parseInt(params.subject);
+        const errors2 = await class_validator_1.validate(valStudent);
+        if (errors2.length <= 0) {
+            const student = {
+                nom_stud: params.nombre,
+                ape_stud: params.apellido,
+                fnac_stud: params.fnac,
+                gen_stud: params.genero,
+                subid_stud: params.subject,
+                fkSubject: params.subject
+            };
             const oldSub = await this._subjectService.SubjectEntity.findOne(request.query.old);
             oldSub.sub_cupo++;
-            console.log("--OLD: ", oldSub);
             const newSub = await this._subjectService.SubjectEntity.findOne(params.subject);
             newSub.sub_cupo--;
-            console.log("--NEW: ", newSub);
             const errors = await class_validator_1.validate(newSub);
-            console.log(`errors: ${errors.length}`);
             if (errors.length > 0) {
                 response.redirect(`/student/edit?id=${request.query.id}&men=Classroom is Full`);
             }
@@ -172,6 +187,9 @@ let StudentController = class StudentController {
                 await this._StudentService.StudentEntity.update(request.query.id, student);
                 response.redirect(`/student/?men=Student Updated:`);
             }
+        }
+        else {
+            response.redirect(`/student/edit?id=${request.query.id}&men=Invalid Input`);
         }
     }
     async delete(request, params, response) {

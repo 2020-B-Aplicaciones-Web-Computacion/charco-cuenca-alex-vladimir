@@ -1,76 +1,107 @@
-import {BadRequestException, Controller, ForbiddenException, Get, Req, Res, Session} from '@nestjs/common';
+import {
+  BadRequestException,
+  Controller,
+  ForbiddenException,
+  Get,
+  Post,
+  Req,
+  Res,
+  Session,
+} from '@nestjs/common';
 import { AppService } from './app.service';
+import { CreateFormDTO } from './DTO/createFormDTO';
+import { validate } from 'class-validator';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
+
+  @Post('validateForm')
+  async validateForm(@Req() request, @Res() response) {
+    //Clases de transferencia: User->BAckend
+    console.log(request.body)
+    const dtoForm = new CreateFormDTO();
+    dtoForm.name = request.body.name;
+    dtoForm.age = request.body.age;
+    dtoForm.ci = request.body.ci;
+    dtoForm.email = request.body.email;
+    dtoForm.single = request.body.single;
+
+    console.log("Validating")
+    const erros = await validate(dtoForm);
+    console.log("Validated")
+    if (erros.length > 0) {
+      console.error(JSON.stringify(erros));
+      console.error(erros.toString());
+      throw new BadRequestException('Envio incorrecto de parametros');
+    } else {
+      console.log('Validated');
+      //Llamar al servicio y crear el registro
+      response.send("OK")
+    }
+  }
 
   @Get()
   getHello(): string {
     return this.appService.getHello();
   }
 
-  @Get("/login/:nombre/:apellido")
+  @Get('/login/:nombre/:apellido')
   login(
-      //Decorador para sesion de NestJs
-      @Session() session,
-      @Req() request
-  ):string{
-    if(request.params.nombre&&request.params.apellido){
-      session.usuario={
-        nombre:request.params.nombre,
-        apellido:request.params.apellido
+    //Decorador para sesion de NestJs
+    @Session() session,
+    @Req() request,
+  ): string {
+    if (request.params.nombre && request.params.apellido) {
+      session.usuario = {
+        nombre: request.params.nombre,
+        apellido: request.params.apellido,
       };
 
-      if(request.params.apellido==="b"){
-        session.usuario.isAdmin=true;
+      if (request.params.apellido === 'b') {
+        session.usuario.isAdmin = true;
       }
 
-      return "User Logged In as: "+session.usuario.nombre+" "+session.usuario.apellido;
-    }else {
-      throw new BadRequestException("No envia nombre ni apellido");//400
-    }
-
-  }
-
-  @Get("/identify")
-  indetify(
-      @Session() session
-  ):string{
-    if(session.usuario){
-      return session.usuario.nombre+session.usuario.apellido
-    }else {
-      return "Not logged"
+      return (
+        'User Logged In as: ' +
+        session.usuario.nombre +
+        ' ' +
+        session.usuario.apellido
+      );
+    } else {
+      throw new BadRequestException('No envia nombre ni apellido'); //400
     }
   }
 
-  @Get("/logout")
-  logout(
-      @Session() session,
-      @Req() request
-  ){
-    session.usuario=undefined;
+  @Get('/identify')
+  indetify(@Session() session): string {
+    if (session.usuario) {
+      return session.usuario.nombre + session.usuario.apellido;
+    } else {
+      return 'Not logged';
+    }
+  }
+
+  @Get('/logout')
+  logout(@Session() session, @Req() request) {
+    session.usuario = undefined;
     request.session.destroy();
-    return "Logged Out";
-
+    return 'Logged Out';
   }
 
-  @Get("/protected")
-  protected (
-      @Session() session
-  ):string{
-    if(session.usuario){
-      if(session.usuario.isAdmin){
-        return "Secret Content"
-      }else {
-        throw new ForbiddenException("No tienes Rol Admin")
+  @Get('/protected')
+  protected(@Session() session): string {
+    if (session.usuario) {
+      if (session.usuario.isAdmin) {
+        return 'Secret Content';
+      } else {
+        throw new ForbiddenException('No tienes Rol Admin');
       }
-    }else {
-      throw new ForbiddenException("Not Logged")
+    } else {
+      throw new ForbiddenException('Not Logged');
     }
   }
 }
-
 
 /*
 //Clase - Typescript

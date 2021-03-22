@@ -1182,8 +1182,8 @@
         "affectsGlobalScope": false
       },
       "../src/app.controller.ts": {
-        "version": "c8185f377e0a30eebbdff1efacfdf1309fb48dd4124ba4441a338d930a76f3e8",
-        "signature": "e54e8a0a34b63a3e719c59845d96f0f2fed38f13f49ee3b58785847a803d8804",
+        "version": "5f63dd082cc13e30108e0688d34578d78168a2b644404720f91bfeb3e1b95719",
+        "signature": "55a85bed84a2108f0d469b48571f6d0669bff1f18ad9c5c09454be32354933cd",
         "affectsGlobalScope": false
       },
       "../node_modules/typeorm/schema-builder/options/TableColumnOptions.d.ts": {
@@ -3472,7 +3472,7 @@
         "affectsGlobalScope": false
       },
       "../src/subject/subject.entity.ts": {
-        "version": "bc95de4b620e902232e061af09bf95f6a3fa9930b2e2a77fbd34e4f16e654834",
+        "version": "35ef4e8d6314066ba4ea56d07f8a8ddf418c2205ea0be8f18a2798f5f75730fb",
         "signature": "c82dd98b1d59a7c75c640e87fcf2a9f90ce4ab0b6678979a45b7e46160165d10",
         "affectsGlobalScope": false
       },
@@ -3491,8 +3491,13 @@
         "signature": "82b835448636f22376860c5d4a1ac5150929572474c1d8f2cc42f16c46fde5f9",
         "affectsGlobalScope": false
       },
+      "../src/DTO/subjectDTO.ts": {
+        "version": "363aebf05eb801731d08942bc295065ac4a1fc1f9f2904206e3f520393bec3ef",
+        "signature": "51e4007a4b13824a2deedf7053141eb7fa9938340c8bae5d058af22c93207034",
+        "affectsGlobalScope": false
+      },
       "../src/subject/subject.controller.ts": {
-        "version": "fbaf004d937c2b721f5467a7d8acb54b0f89b7ff6ef88da9500fac98071fa2be",
+        "version": "217439e9cb6961acd6bb17508687036ba1cb1c796488d90ec2ad494453a25868",
         "signature": "098c49e8f56b023b9ec6d17ca2be60f2f613f02279baa2bb42163d32d5ea34d2",
         "affectsGlobalScope": false
       },
@@ -3501,8 +3506,13 @@
         "signature": "2127ea3743dcbb39721dbc90431ad17577949f7fdc2b572c5221bbc46ec621cf",
         "affectsGlobalScope": false
       },
+      "../src/DTO/studentDTO.ts": {
+        "version": "44f8534fbfbb438aaf32501c436169965f3becd75a4e6d9affd5ef5ed708c89d",
+        "signature": "518847d5ecc1c18dcc2ad814234ffc7d751647a37dace8515ab07690e3ac3a87",
+        "affectsGlobalScope": false
+      },
       "../src/student/student.controller.ts": {
-        "version": "4870ce641089a90c7092ed8f3b03184be91ec4718a672a6bddea8dfeac3367b7",
+        "version": "b6f802500ae6d52cdfa9370f2a8dee82056a94c04325a59734dc707338aa2944",
         "signature": "f9dfd4d844edb5d5764fb1e1a2dbf95f04e564b411e4da68c2be8cc5625cc4fb",
         "affectsGlobalScope": false
       },
@@ -3982,7 +3992,7 @@
         "affectsGlobalScope": false
       },
       "../src/main.ts": {
-        "version": "ecaab58051b92cb80cf5fd13babd704d0c7b676c31a4e2544cea9f7480eb59dc",
+        "version": "dac714fdd01aad167e3463a99bbce20ab323d7f5b335dfb17f679acbd70241f4",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
         "affectsGlobalScope": false
       },
@@ -7369,6 +7379,12 @@
         "../node_modules/typeorm/metadata/RelationMetadata.d.ts",
         "../node_modules/typeorm/query-runner/QueryRunner.d.ts"
       ],
+      "../src/DTO/studentDTO.ts": [
+        "../node_modules/class-validator/types/index.d.ts"
+      ],
+      "../src/DTO/subjectDTO.ts": [
+        "../node_modules/class-validator/types/index.d.ts"
+      ],
       "../src/app.controller.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
         "../src/app.service.ts"
@@ -7396,6 +7412,7 @@
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/class-validator/types/index.d.ts",
         "../node_modules/typeorm/index.d.ts",
+        "../src/DTO/studentDTO.ts",
         "../src/student/student.entity.ts",
         "../src/student/student.service.ts",
         "../src/subject/subject.entity.ts",
@@ -7421,7 +7438,9 @@
       ],
       "../src/subject/subject.controller.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/class-validator/types/index.d.ts",
         "../node_modules/typeorm/index.d.ts",
+        "../src/DTO/subjectDTO.ts",
         "../src/subject/subject.entity.ts",
         "../src/subject/subject.service.ts"
       ],
@@ -11404,6 +11423,8 @@
       "../node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../node_modules/typescript/lib/lib.scripthost.d.ts",
       "../node_modules/typescript/lib/lib.webworker.importscripts.d.ts",
+      "../src/DTO/studentDTO.ts",
+      "../src/DTO/subjectDTO.ts",
       "../src/app.controller.ts",
       "../src/app.module.ts",
       "../src/app.service.ts",

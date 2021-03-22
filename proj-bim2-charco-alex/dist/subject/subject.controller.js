@@ -16,6 +16,8 @@ exports.SubjectController = void 0;
 const common_1 = require("@nestjs/common");
 const subject_service_1 = require("./subject.service");
 const typeorm_1 = require("typeorm");
+const subjectDTO_1 = require("../DTO/subjectDTO");
+const class_validator_1 = require("class-validator");
 let SubjectController = class SubjectController {
     constructor(_subjectService) {
         this._subjectService = _subjectService;
@@ -47,32 +49,66 @@ let SubjectController = class SubjectController {
             }
         });
         response.render('subjectList', {
-            datos: data
+            datos: data,
+            men: request.query.men
         });
     }
     async create(request, response) {
-        response.render("subjectCreate");
+        response.render("subjectCreate", {
+            men: request.query.men
+        });
     }
     async createSubject(params, response) {
-        await this._subjectService.SubjectEntity.save({
-            sub_name: params.nombre,
-            sub_cupo: params.cupo,
-            sub_cod: params.codigo.toUpperCase(),
-            sub_fstart: params.finicio,
-            sub_fend: params.fend
-        });
-        response.redirect(`/subject/?men=Subject Created:`);
+        const valSubject = new subjectDTO_1.SubjectDTO();
+        valSubject.sub_name = params.nombre;
+        valSubject.sub_cupo = parseInt(params.cupo);
+        valSubject.sub_cod = params.codigo.toUpperCase();
+        valSubject.sub_fstart = new Date(params.finicio);
+        valSubject.sub_fend = new Date(params.fend);
+        const errors = await class_validator_1.validate(valSubject);
+        if (errors.length > 0) {
+            console.log("errores: ", errors.length, "are: ", errors.toString());
+            response.redirect(`/subject/create?men=Invalid Input`);
+        }
+        else {
+            try {
+                await this._subjectService.SubjectEntity.save({
+                    sub_name: params.nombre,
+                    sub_cupo: params.cupo,
+                    sub_cod: params.codigo.toUpperCase(),
+                    sub_fstart: params.finicio,
+                    sub_fend: params.fend
+                });
+                response.redirect(`/subject/?men=Subject Created: ${params.codigo.toUpperCase()} - ${params.nombre}`);
+            }
+            catch (e) {
+                response.redirect(`/subject/create?men=Invalid Input`);
+            }
+        }
     }
     async updateSubject(request, params, response) {
-        const subject = {
-            sub_name: params.nombre,
-            sub_cupo: params.cupo,
-            sub_cod: params.codigo.toUpperCase(),
-            sub_fstart: params.finicio,
-            sub_fend: params.fend
-        };
-        await this._subjectService.SubjectEntity.update(request.query.id, subject);
-        response.redirect(`/subject/?men=Subject Updated:`);
+        const valSubject = new subjectDTO_1.SubjectDTO();
+        valSubject.sub_name = params.nombre;
+        valSubject.sub_cupo = parseInt(params.cupo);
+        valSubject.sub_cod = params.codigo.toUpperCase();
+        valSubject.sub_fstart = new Date(params.finicio);
+        valSubject.sub_fend = new Date(params.fend);
+        const errors = await class_validator_1.validate(valSubject);
+        if (errors.length > 0) {
+            console.log("errores: ", errors.length, "are: ", errors.toString());
+            response.redirect(`/subject/create?men=Invalid Input`);
+        }
+        else {
+            const subject = {
+                sub_name: params.nombre,
+                sub_cupo: params.cupo,
+                sub_cod: params.codigo.toUpperCase(),
+                sub_fstart: params.finicio,
+                sub_fend: params.fend
+            };
+            await this._subjectService.SubjectEntity.update(request.query.id, subject);
+            response.redirect(`/subject/?men=Subject Updated: ${subject.sub_cod} - ${subject.sub_name}`);
+        }
     }
     async delete(request, response) {
         let idPar = request.query.id;
